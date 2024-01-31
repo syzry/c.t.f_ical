@@ -1,0 +1,47 @@
+
+name: Daily Fetch and Update
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  schedule:
+    - cron: '0 */1 * * *'
+
+permissions:
+  contents: write
+
+
+jobs:
+  fetch_and_update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch events
+        run: python fetch.py
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git add .
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "CHANGES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and push changes
+        if: env.CHANGES == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automatically update
