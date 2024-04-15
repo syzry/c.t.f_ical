@@ -108,12 +108,12 @@ with open('Global.txt', 'w', encoding='utf-8') as file:
             file.write(j+':'+k+'\n')
     file.write('END:VCALENDAR')
 
-cn_ctf_data = fetch_cn_ctf_data(cn_ctf_url)
-with open('CN.txt', 'w', encoding='utf-8') as file:
-    file.write('BEGIN:VCALENDAR\n')
-    for i in cn_ctf_data:
-        for j,k in i.items():
-            file.write(j+':'+k+'\n')
-    file.write('END:VCALENDAR')
+# cn_ctf_data = fetch_cn_ctf_data(cn_ctf_url)
+# with open('CN.txt', 'w', encoding='utf-8') as file:
+#     file.write('BEGIN:VCALENDAR\n')
+#     for i in cn_ctf_data:
+#         for j,k in i.items():
+#             file.write(j+':'+k+'\n')
+#     file.write('END:VCALENDAR')
 
 print("数据抓取完成，保存为 CN.json 和 Global.json")
